@@ -8,7 +8,7 @@
 
 
 ;; solutions pour comparer 2 valeurs d'une serie,
-;; 1/ 2 sequence s, (next s)
+;; 1/ 2 sequences s & (next s)
 ;; 2/ fonction de mapping avec destruct qui va au-dela de la fin + partition
 ;; 3/ partition
 ;; 4/ recur avec destruct
@@ -19,7 +19,7 @@
                   :x [a]))
           c `(~@(next c) \-)))
 
-(insert-with4 < :zzz [1 3 4 2 18 12 7])
+(insert-with1 < :zzz [1 3 4 2 18 12 7])
 
 (defn insert-with2 [p v c]
   (mapcat (fn [[a b]]
@@ -49,7 +49,7 @@
           (recur (z) `(~y ~@m)))
         (z)))))
 
-(defn insert-with5 [p v c]
+(defn insert-with4b [p v c]
   (loop [r [] [x y & m :as a] c]
     (let [z (partial conj r x)]
       (if y
@@ -59,9 +59,9 @@
         (z)))))
 
 
-(insert-with2 < :zzz [1 3 4 2 18 12 7])
-(insert-with < :zzz [1])
-(insert-with < :zzz ())
+(insert-with4 < :zzz [1 3 4 2 18 12 7])
+(insert-with4 < :zzz [1])
+(insert-with4 < :zzz ())
 
 
 (def __

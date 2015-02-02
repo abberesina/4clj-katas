@@ -12,7 +12,7 @@
       (assoc (part-kv b) k a))
     {}))
 
-(defn part-kv3 [xs]
+(defn part-kv2 [xs]
   (loop [r {}
          [k & s] xs]
     (if k
@@ -20,13 +20,7 @@
         (recur (assoc r k a) b))
       r)))
 
-(part-kv3 [:a :b 1 2 3 :c])
-(part-kv3 [])
-
-
-
-
-(defn part-kv2 [kvs]
+(defn part-kv3 [kvs]
   (letfn [(f [xs]
             (loop [r []
                    [k v & xs :as xxs] xs]
@@ -41,11 +35,8 @@
                       [k []]))
                   (partition-all 2 (partition-by type (f kvs)))))))
 
-(partition-by type (part-kv [:a :b :c :d 1 2 3]))
-(partition-by type (part-kv []))
-(partition-all 2 (partition-by type []))
-(part-kv2 [:q :w :e 1 2 3 :r 6 7 :t 4 :y])
-(part-kv2 [])
+(part-kv3 [:a :b :c :d 1 2 3])
+(part-kv [])
 
 (def __
   part-kv2
