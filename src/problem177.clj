@@ -9,26 +9,7 @@
    (not (__ "([]([(()){()}(()(()))(([[]]({}([)))())]((((()()))))))"))
    (not (__ "["))])
 
-(defn validate-brackets [bs]
-  (let [brackets {\( [nil :open]
-                  \[ [nil :open]
-                  \{ [nil :open]
-                  \) [\( :close]
-                  \] [\[ :close]
-                  \} [\{ :close]}]
-    (empty? (reduce (fn [s c]
-                      (if-let [b (brackets c)]
-                        (let [[m t] b]
-                          (if (= :open t)
-                            (conj s c)
-                            (if-let [top (peek s)]
-                              (if (= top m)
-                                (pop s)
-                                (reduced [(str "Unmatched " c)]))
-                              (reduced [(str "Unmatched " c)]))))
-                        s)) [] bs))))
-
-(defn validate-brackets2 [bs]
+(defn validate-brackets1 [bs]
   (let [open (fn [st c] [true (conj st c)])
         close (fn [match]
                 (fn [st c]
@@ -49,7 +30,7 @@
                               (reduced st)))
                         s)) [] bs))))
 
-(defn validate-brackets3 [bs]
+(defn validate-brackets [bs]
   (let [o conj
         c (fn [m]
             (fn [st _]
@@ -66,11 +47,11 @@
                       (b s x) s))
                   [] bs))))
 
-(def __ validate-brackets3)
+(def __ validate-brackets)
 
-(__ "(start, [middleware[[]]], (({{{([[]]())}}})), end {})")
-(__ "(start, [middleware[[]]], (({{{([[]]())}]}})), end {})")
-(__ "(start, [middleware[[]]], ) [[{")
+(__ "(start, [middle[[]]], (({{{([[]]())}}})), end {})")
+(__ "(start, [middle[[]]], (({{{([[]]())}]}})), end {})")
+(__ "(start, [middle[[]]], ) [[{")
 
 (defn test-code
   []
