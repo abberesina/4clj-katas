@@ -5,8 +5,11 @@
    (= (__ [:b :a :b :a :b]) {:a 2, :b 3})
    (= (__ '([1 2] [1 3] [1 3])) {[1 2] 1, [1 3] 2})])
 
+(def count-occ
+  #(apply (partial merge-with +) (map (fn [n] {n 1}) %)))
+
 (def __
-  #(apply (partial merge-with +) (map (fn [n] {n 1}) %))
+  count-occ
   )
 
 (defn test-code
